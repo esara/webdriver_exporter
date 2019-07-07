@@ -29,9 +29,6 @@ spec:
             port: 9156
         securityContext:
           readOnlyRootFilesystem: true
-          capabilities:
-            drop:
-            - ALL
         volumeMounts:
         - mountPath: /var/log/supervisor
           name: webdriver-supervisor

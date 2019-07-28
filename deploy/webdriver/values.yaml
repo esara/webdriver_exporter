@@ -9,7 +9,9 @@ image:
   tag: latest
   pullPolicy: IfNotPresent
 
-resources: {}
+resources:
+  limits:
+    memory: 512Mi
 
 nodeSelector: {}
 

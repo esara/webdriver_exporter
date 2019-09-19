@@ -16,7 +16,7 @@ spec:
   #  imageUsername: turbouser
   #  imagePassword: turbopassword
     repository: turbonomic
-    tag: 7.17.2
+    tag: 7.17.3
     externalIP: 10.0.2.15
   nginxingress:
     enabled: false
@@ -355,8 +355,8 @@ spec:
             metrics_path: /probe
             static_configs:
               - targets:
-                - https://10.16.172.10/u/app/index.html
                 - https://10.16.172.11/u/app/index.html
+                - https://10.16.172.12/u/app/index.html
 
             relabel_configs:
               - source_labels: [__address__]

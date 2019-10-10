@@ -31,19 +31,19 @@ Please see the install guide pdf for more details at <https://docs.turbonomic.c
 ````
 curl -s https://raw.githubusercontent.com/esara/webdriver_exporter/master/deploy/webdriver_yamls/eum.yaml >  /opt/kubernetes/operator/deploy/crds/eum.yaml
 ````
-Configure the IP address for the ingress it up by changing this line in /opt/local/etc/turbo.conf:
+Configure the IP address for the ingress it up by changing this line in /opt/kubernetes/operator/deploy/crds/eum.yaml:
 ````
 externalIP: 10.0.2.15
 ````
 
 and add the customer's web application urls to be monitored by prometheus:
 ````
-          - job_name: 'webdriver'*
-            metrics_path: /probe*
-            static_configs:*
-              - targets:*
-                - <https://10.16.172.11/u/app/index.html>*
-                - <https://10.16.172.12/u/app/index.html>*
+          - job_name: 'webdriver'
+            metrics_path: /probe
+            static_configs:
+              - targets:
+                - https://10.16.172.11/u/app/index.html
+                - https://10.16.172.12/u/app/index.html
 ````
 and apply the configuration
 ````
@@ -58,6 +58,6 @@ cd webdriver_exporter/deploy; helm install webdriver --name webdriver --namespac
 **Step 4) Deploy prometurbo from <https://github.com/turbonomic/prometurbo/tree/master/deploy>**
 ````
 cd /opt;  git clone <https://github.com/turbonomic/prometurbo.git>;
-cd prometurbo/deploy; helm install prometurbo --name prometurbo --namespace turbonomic --set serverMeta.turboServer=https://10.16.172.10 --set restAPIConfig.opsManagerUserName=administrator --set restAPIConfig.opsManagerPassword=password --set prometurboTargetConfig.createProxyVM=true --set prometurboTargetConfig.targetAddress=[http://prometheus-server:9090](http://prometheus-server:9090/)
+cd prometurbo/deploy; helm install prometurbo --name prometurbo --namespace turbonomic --set serverMeta.turboServer=https://10.16.172.10 --set restAPIConfig.opsManagerUserName=administrator --set restAPIConfig.opsManagerPassword=password --set prometurboTargetConfig.createProxyVM=true --set prometurboTargetConfig.targetAddress=http://prometheus-server:9090
 ````
 The Turbo server can either be an already existing classic Turbonomic 6 instance or you can point to a Turbonomic 7 instance that you just created as long as you have a valid admin user/password.

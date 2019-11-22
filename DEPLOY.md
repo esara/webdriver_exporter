@@ -6,7 +6,7 @@ a) BYOK8S (GKE, AKS, EKS, Openshift or any other distribution with persistent st
 ````
 kubectl create ns turbonomic
 kubectl create -f https://raw.githubusercontent.com/turbonomic/t8c-install/master/operator/deploy/service_account.yaml -n turbonomic
-kubectl create -f https://raw.githubusercontent.com/esara/webdriver_exporter/master/deploy/webdriver_yamls/role_binding.yaml -n turbonomic
+kubectl create -f https://raw.githubusercontent.com/turbonomic/webdriver_exporter/master/deploy/webdriver_yamls/role_binding.yaml -n turbonomic
 kubectl create -f https://raw.githubusercontent.com/turbonomic/t8c-install/master/operator/deploy/crds/charts_v1alpha1_xl_crd.yaml -n turbonomic
 kubectl create -f https://raw.githubusercontent.com/turbonomic/t8c-install/master/operator/deploy/operator.yaml -n turbonomic
 ````
@@ -19,7 +19,7 @@ node="10.0.2.15"
 ````
 and change the role that enables Prometheus to run
 ````
-curl -s https://raw.githubusercontent.com/esara/webdriver_exporter/master/deploy/webdriver_yamls/role_binding.yaml > /opt/kubernetes/operator/deploy/role_binding.yaml
+curl -s https://raw.githubusercontent.com/turbonomic/webdriver_exporter/master/deploy/webdriver_yamls/role_binding.yaml > /opt/kubernetes/operator/deploy/role_binding.yaml
 ````
 Bring up kubernetes
 ````
@@ -29,7 +29,7 @@ Please see the install guide pdf for more details at <https://docs.turbonomic.c
 
 **Step 2) Configure prometheus**
 ````
-curl -s https://raw.githubusercontent.com/esara/webdriver_exporter/master/deploy/webdriver_yamls/eum.yaml >  /opt/kubernetes/operator/deploy/crds/eum.yaml
+curl -s https://raw.githubusercontent.com/turbonomic/webdriver_exporter/master/deploy/webdriver_yamls/eum.yaml >  /opt/kubernetes/operator/deploy/crds/eum.yaml
 ````
 Configure the IP address for the ingress it up by changing this line in /opt/kubernetes/operator/deploy/crds/eum.yaml:
 ````
@@ -50,14 +50,14 @@ and apply the configuration
 kubectl apply -f /opt/turbonomic/kubernetes/operator/deploy/crds/eum.yaml
 ````
 
-**Step 3) Deploy webdriver from <https://github.com/esara/webdriver_exporter/tree/master/deploy>**
+**Step 3) Deploy webdriver from <https://github.com/turbonomic/webdriver_exporter/tree/master/deploy>**
 ````
-cd /opt;  git clone <https://github.com/esara/webdriver_exporter.git>;
+cd /opt;  git clone https://github.com/turbonomic/webdriver_exporter.git;
 cd webdriver_exporter/deploy; helm install webdriver --name webdriver --namespace turbonomic
 ````
 **Step 4) Deploy prometurbo from <https://github.com/turbonomic/prometurbo/tree/master/deploy>**
 ````
-cd /opt;  git clone <https://github.com/turbonomic/prometurbo.git>;
+cd /opt;  git clone https://github.com/turbonomic/prometurbo.git;
 cd prometurbo/deploy; helm install prometurbo --name prometurbo --namespace turbonomic --set serverMeta.turboServer=https://10.16.172.10 --set restAPIConfig.opsManagerUserName=administrator --set restAPIConfig.opsManagerPassword=password --set prometurboTargetConfig.createProxyVM=true --set prometurboTargetConfig.targetAddress=http://prometheus-server:9090
 ````
 The Turbo server can either be an already existing classic Turbonomic 6 instance or you can point to a Turbonomic 7 instance that you just created as long as you have a valid admin user/password.

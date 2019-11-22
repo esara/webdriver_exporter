@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: esara
+  repository: turbonomic
   tag: latest
   pullPolicy: IfNotPresent
 

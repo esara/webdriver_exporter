@@ -6,26 +6,24 @@ a) BYOK8S (GKE, AKS, EKS, Openshift or any other distribution with persistent st
 ````
 kubectl create ns turbonomic
 kubectl create -f https://raw.githubusercontent.com/turbonomic/t8c-install/master/operator/deploy/service_account.yaml -n turbonomic
-kubectl create -f https://raw.githubusercontent.com/turbonomic/webdriver_exporter/master/deploy/webdriver_yamls/role_binding.yaml -n turbonomic
+kubectl create -f https://raw.githubusercontent.com/turbonomic/t8c-install/master/operator/deploy/cluster_role.yaml -n turbonomic
+kubectl create -f https://raw.githubusercontent.com/turbonomic/t8c-install/master/operator/deploy/cluster_role_binding.yaml -n turbonomic
 kubectl create -f https://raw.githubusercontent.com/turbonomic/t8c-install/master/operator/deploy/crds/charts_v1alpha1_xl_crd.yaml -n turbonomic
 kubectl create -f https://raw.githubusercontent.com/turbonomic/t8c-install/master/operator/deploy/operator.yaml -n turbonomic
 ````
 
-b) Download the Turbonomic 7.17 OVA from <http://download.vmturbo.com/appliance/release/7.17.0/turbonomic-t8c-7.17.0-20190708133617000.ova>
+b) Download the Turbonomic 7.21 OVA from <http://download.vmturbo.com/appliance/release/7.21.3/turbonomic-t8c-7.21.3-20200325185431000.ova>
 
-Configure the IP address for k8s after booting the VM up by changing this line in /opt/local/etc/turbo.conf:
+Change the role that enables Prometheus to run
 ````
-node="10.0.2.15"
-````
-and change the role that enables Prometheus to run
-````
-curl -s https://raw.githubusercontent.com/turbonomic/webdriver_exporter/master/deploy/webdriver_yamls/role_binding.yaml > /opt/kubernetes/operator/deploy/role_binding.yaml
+curl -s kubectl create -f https://raw.githubusercontent.com/turbonomic/t8c-install/master/operator/deploy/cluster_role.yaml > /opt/kubernetes/operator/deploy/role.yaml
+curl -s kubectl create -f https://raw.githubusercontent.com/turbonomic/t8c-install/master/operator/deploy/cluster_role_binding.yaml > /opt/kubernetes/operator/deploy/role_binding.yaml
 ````
 Bring up kubernetes
 ````
 /opt/local/bin/t8c.sh
 ````
-Please see the install guide pdf for more details at <https://docs.turbonomic.com/pdfdocs/Turbonomic_INSTALL_PRINT_7.17.1.pdf>
+Please see the install guide pdf for more details at <https://docs.turbonomic.com/pdfdocs/Turbonomic_INSTALL_PRINT_7.21.3.pdf
 
 **Step 2) Configure prometheus**
 ````
